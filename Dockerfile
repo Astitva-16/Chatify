@@ -1,5 +1,5 @@
 # ============================================
-# Stage 1: Build React + Vite frontend
+# Stage 1: Build frontend
 # ============================================
 
 FROM node:22-bookworm-slim AS frontend-build
@@ -12,7 +12,6 @@ RUN npm ci
 
 COPY frontend/ ./
 
-# Vite environment variables are needed at BUILD time
 ARG VITE_SUPABASE_URL
 ARG VITE_SUPABASE_KEY
 
@@ -23,44 +22,25 @@ RUN npm run build
 
 
 # ============================================
-# Stage 2: Prepare backend
+# Stage 2: Production
 # ============================================
 
-FROM node:22-bookworm-slim AS backend-build
-
-WORKDIR /app
-
-COPY backend/package.json backend/package-lock.json ./
-
-RUN npm ci
-
-COPY backend/ ./
-
-
-# ============================================
-# Stage 3: Production image
-# ============================================
-
-FROM node:22-bookworm-slim AS runner
+FROM node:22-bookworm-slim
 
 WORKDIR /app
 
 ENV NODE_ENV=production
-ENV PORT=3000
 
-# Install only production dependencies
 COPY backend/package.json backend/package-lock.json ./
 
-RUN npm ci --omit=dev && npm cache clean --force
+RUN npm ci --omit=dev
 
-# Copy backend
-COPY --from=backend-build /app ./backend
+COPY backend/src ./src
 
-# Copy React production build
-COPY --from=frontend-build /app/frontend/dist ./backend/public
+COPY --from=frontend-build /app/frontend/dist ./public
 
 EXPOSE 3000
 
 USER node
 
-CMD ["node", "backend/index.js"]
+CMD ["node", "src/index.js"]
