@@ -31,22 +31,9 @@ if(fs.existsSync(publicDir)){
     });
 }
 
+app.listen(PORT, () => {
+    connectDB();
+    console.log(`Server is running on port ${PORT}`);
 
-const startServer = async () => {
-    try {
-        await connectDB();
-
-        app.listen(PORT, () => {
-            console.log(`Server is running on PORT: ${PORT}`);
-
-            if(process.env.NODE_ENV === "production"){
-                job.start();
-            }
-        });
-    } catch (error) {
-        console.error("Failed to start server:", error);
-        process.exit(1);
-    }
-};
-
-startServer();
+    if(process.env.NODE_ENV === "production") job.start();
+})
