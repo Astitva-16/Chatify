@@ -1,0 +1,379 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Connect — Design System
+   CSS Custom Properties / Design Tokens
+   ============================================================ */
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ---- Light Mode (default) ---- */
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-chat: #e2e8f0;
+  
+  /* Pink for Sent messages */
+  --bg-sent: #ec4899;
+  --bg-sent-hover: #db2777;
+  --text-sent: #ffffff;
+  --tail-sent: #ec4899;
+  
+  /* Cyan for Received messages */
+  --bg-received: #06b6d4;
+  --bg-received-hover: #0891b2;
+  --text-received: #ffffff;
+  --tail-received: #06b6d4;
+
+  --bg-hover: #e2e8f0;
+  --bg-active: #cbd5e1;
+  --bg-input: #ffffff;
+
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-placeholder: #94a3b8;
+  --text-accent: #0284c7;
+
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --accent: #0284c7;
+  --accent-hover: #0369a1;
+  --accent-light: rgba(2, 132, 199, 0.12);
+
+  --danger: #ef4444;
+  --danger-light: rgba(239, 68, 68, 0.12);
+  --success: #10b981;
+  --warning: #f59e0b;
+
+  --header-bg: #ffffff;
+  --composer-bg: #ffffff;
+  --rail-bg: #f1f5f9;
+
+  --modal-bg: #ffffff;
+  --modal-overlay: rgba(15, 23, 42, 0.5);
+
+  --tooltip-bg: #0f172a;
+  --tooltip-text: #ffffff;
+
+  --skeleton-base: #e2e8f0;
+  --skeleton-shine: #f8fafc;
+
+  --message-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --panel-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+
+  /* Wallpaper */
+  --wallpaper-bg: #e2e8f0;
+  --wallpaper-pattern: rgba(15, 23, 42, 0.04);
+
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(15, 23, 42, 0.2);
+  --scrollbar-track: transparent;
+
+  /* Read receipts */
+  --read-receipt: #fce7f3;
+  --unread-receipt: #cffafe;
+
+  /* Badge */
+  --badge-bg: #ec4899;
+  --badge-text: #ffffff;
+
+  /* Online indicator */
+  --online: #10b981;
+}
+
+/* ---- Dark Mode ---- */
+.dark {
+  --bg-primary: #0b1120;
+  --bg-secondary: #0f172a;
+  --bg-chat: #080d1a;
+  
+  /* Pink for Sent messages */
+  --bg-sent: #db2777;
+  --bg-sent-hover: #be185d;
+  --text-sent: #ffffff;
+  --tail-sent: #db2777;
+  
+  /* Cyan for Received messages */
+  --bg-received: #0891b2;
+  --bg-received-hover: #0e7490;
+  --text-received: #ffffff;
+  --tail-received: #0891b2;
+
+  --bg-hover: #1e293b;
+  --bg-active: #1e293b;
+  --bg-input: #1e293b;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-placeholder: #64748b;
+  --text-accent: #38bdf8;
+
+  --border: #1e293b;
+  --border-strong: #334155;
+
+  --accent: #38bdf8;
+  --accent-hover: #0ea5e9;
+  --accent-light: rgba(56, 189, 248, 0.15);
+
+  --danger: #f87171;
+  --danger-light: rgba(248, 113, 113, 0.15);
+  --success: #34d399;
+  --warning: #fbbf24;
+
+  --header-bg: #0f172a;
+  --composer-bg: #0f172a;
+  --rail-bg: #070c18;
+
+  --modal-bg: #0f172a;
+  --modal-overlay: rgba(3, 7, 18, 0.8);
+
+  --tooltip-bg: #f8fafc;
+  --tooltip-text: #0f172a;
+
+  --skeleton-base: #1e293b;
+  --skeleton-shine: #334155;
+
+  --message-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  --panel-shadow: -2px 0 12px rgba(0, 0, 0, 0.35);
+
+  --wallpaper-bg: #080d1a;
+  --wallpaper-pattern: rgba(255, 255, 255, 0.03);
+
+  --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+  --scrollbar-track: transparent;
+
+  /* Read receipts */
+  --read-receipt: #fce7f3;
+  --unread-receipt: #cffafe;
+
+  --badge-bg: #ec4899;
+  --badge-text: #ffffff;
+
+  --online: #34d399;
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ============================================================
+   Theme Transition
+   ============================================================ */
+
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 250ms ease, color 200ms ease, border-color 200ms ease, box-shadow 200ms ease !important;
+  transition-delay: 0s !important;
+}
+
+/* ============================================================
+   Scrollbar Styles
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb);
+  opacity: 0.8;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* ============================================================
+   Chat Wallpaper Pattern
+   ============================================================ */
+
+.chat-wallpaper {
+  background-color: var(--wallpaper-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cdefs%3E%3Cstyle%3E.p%7Bfill:none;stroke:%23808080;stroke-width:0.8;stroke-linecap:round;stroke-linejoin:round;opacity:0.35%7D%3C/style%3E%3C/defs%3E%3Cpath class='p' d='M20 15c0-2.2 1.8-4 4-4h10c2.2 0 4 1.8 4 4v6c0 2.2-1.8 4-4 4h-6l-4 3v-3h0c-2.2 0-4-1.8-4-4v-6z'/%3E%3Cpath class='p' d='M60 18l12-6-4 8 4 8-12-6z M60 18l4 2'/%3E%3Ccircle class='p' cx='105' cy='17' r='7'/%3E%3Cpath class='p' d='M101 19.5c1 1.5 3.2 2.5 4 2.5s3-1 4-2.5 M102.5 15.5v1 M107.5 15.5v1'/%3E%3Cpath class='p' d='M150 10l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z'/%3E%3Cpath class='p' d='M18 55c0-2.5 2-4.5 4.5-4.5h3c2.5 0 4.5 2 4.5 4.5s-2 4.5-4.5 4.5h-3 M35 55c0 2.5-2 4.5-4.5 4.5h-3c-2.5 0-4.5-2-4.5-4.5 M26 55h3'/%3E%3Cpath class='p' d='M62 48h10c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H62c-1.1 0-2-.9-2-2V50c0-1.1.9-2 2-2z M64 60h6'/%3E%3Ccircle class='p' cx='107' cy='55' r='7'/%3E%3Cpath class='p' d='M114 55c0 2-1 3-2.5 3s-2.5-1.3-2.5-3 1-3 2.5-3 2.5 1.3 2.5 3z'/%3E%3Cpath class='p' d='M143 48h14c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2h-14c-1.1 0-2-.9-2-2V50c0-1.1.9-2 2-2z M141 49l10 7 10-7'/%3E%3Cpath class='p' d='M22 95c0-2.2 1.8-3 3.5-3s3.5 1.5 3.5 3c0 2-3.5 5-3.5 5S22 97 22 95z'/%3E%3Cpath class='p' d='M60 100l3-5 3 5 M57 96c2-2.5 4.5-4 6-4s4 1.5 6 4 M54.5 93c3-3 6-5 8.5-5s5.5 2 8.5 5'/%3E%3Cpath class='p' d='M98 93h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H98c-1.1 0-2-.9-2-2V95c0-1.1.9-2 2-2z M104 92l2-2h4l2 2'/%3E%3Ccircle class='p' cx='106' cy='100' r='3'/%3E%3Cpath class='p' d='M152 90v12c0 1.7-1.3 3-3 3s-3-1.3-3-3 1.3-3 3-3 M152 90l6-2v12'/%3E%3Ccircle class='p' cx='25' cy='140' r='7'/%3E%3Cpath class='p' d='M25 136v4l3 2'/%3E%3Cpath class='p' d='M65 133v4c0 2.2 1.8 4 4 4h0c2.2 0 4-1.8 4-4v-4 M69 145v3 M65 148h8'/%3E%3Crect class='p' x='67' y='130' width='4' height='8' rx='2'/%3E%3Cpath class='p' d='M106 130c3.3 0 6 2.7 6 6 0 4-6 10-6 10s-6-6-6-10c0-3.3 2.7-6 6-6z'/%3E%3Ccircle class='p' cx='106' cy='136' r='2'/%3E%3Crect class='p' x='140' y='132' width='12' height='10' rx='1'/%3E%3Cpath class='p' d='M152 135l6-3v10l-6-3'/%3E%3Ccircle class='p' cx='22' cy='178' r='1.5'/%3E%3Ccircle class='p' cx='28' cy='178' r='1.5'/%3E%3Ccircle class='p' cx='34' cy='178' r='1.5'/%3E%3Cpath class='p' d='M62 180l10-5-10-5v4h-4v2h4z'/%3E%3Cpath class='p' d='M100 172v14 M106 172v14 M96 177h14 M96 181h14'/%3E%3Ccircle class='p' cx='150' cy='178' r='7'/%3E%3Cpath class='p' d='M143 178h14 M150 171c-2 2-3 4.5-3 7s1 5 3 7 M150 171c2 2 3 4.5 3 7s-1 5-3 7'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  background-repeat: repeat;
+}
+
+/* ============================================================
+   Animation Keyframes & Classes
+   ============================================================ */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+@keyframes onlinePulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 200ms ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 200ms ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 200ms ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-scale-in {
+  animation: scaleIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-online-pulse {
+  animation: onlinePulse 2s ease-in-out infinite;
+}
+
+.typing-dot {
+  animation: typing 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* ============================================================
+   Message Bubble Tails
+   ============================================================ */
+
+.message-tail-sent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -7px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid var(--tail-sent);
+  border-bottom: 8px solid transparent;
+}
+
+.message-tail-received::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-right: 8px solid var(--tail-received);
+  border-bottom: 8px solid transparent;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-light);
+  color: var(--text-primary);
+}
